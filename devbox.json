@@ -3,7 +3,10 @@
     "glibcLocales@latest",
     "elixir@latest",
     "inotify-tools@latest",
-    "elixir_ls@latest"
+    "elixir_ls@latest",
+    "elmPackages.elm@latest",
+    "elmPackages.elm-language-server@latest",
+    "elmPackages.elm-format@latest"
   ],
   "shell": {
     "init_hook": [

@@ -1,0 +1,53 @@
+{
+  "lockfile_version": "1",
+  "packages": {
+    "elixir@latest": {
+      "last_modified": "2024-02-08T11:55:47Z",
+      "resolved": "github:NixOS/nixpkgs/c0b7a892fb042ede583bdaecbbdc804acb85eabe#elixir",
+      "source": "devbox-search",
+      "version": "1.15.7",
+      "systems": {
+        "aarch64-darwin": {
+          "store_path": "/nix/store/d86y8biqihs0aw2b4xawasizw8i413sg-elixir-1.15.7"
+        },
+        "aarch64-linux": {
+          "store_path": "/nix/store/fp4qrmy9lc5r94avr5qb9vdfq7v0r2g8-elixir-1.15.7"
+        },
+        "x86_64-darwin": {
+          "store_path": "/nix/store/8w1d6z2y75qgqivq9s3q6xn7qw2mkias-elixir-1.15.7"
+        },
+        "x86_64-linux": {
+          "store_path": "/nix/store/654a9c35qmfzywq2b2h6hss50snb3djc-elixir-1.15.7"
+        }
+      }
+    },
+    "glibcLocales@latest": {
+      "last_modified": "2024-01-27T14:55:31Z",
+      "resolved": "github:NixOS/nixpkgs/160b762eda6d139ac10ae081f8f78d640dd523eb#glibcLocales",
+      "source": "devbox-search",
+      "version": "2.38-27",
+      "systems": {
+        "aarch64-linux": {
+          "store_path": "/nix/store/r7yjws2bq7ps6bivmwrbvvyx6p1g9i68-glibc-locales-2.38-27"
+        },
+        "x86_64-linux": {
+          "store_path": "/nix/store/pvqdhg5snh86jnin6vfn5y4l7x4qs0wb-glibc-locales-2.38-27"
+        }
+      }
+    },
+    "inotify-tools@latest": {
+      "last_modified": "2024-01-27T14:55:31Z",
+      "resolved": "github:NixOS/nixpkgs/160b762eda6d139ac10ae081f8f78d640dd523eb#inotify-tools",
+      "source": "devbox-search",
+      "version": "4.23.9.0",
+      "systems": {
+        "aarch64-linux": {
+          "store_path": "/nix/store/klda7mipzrbi6apc120p756gqgmvm1bk-inotify-tools-4.23.9.0"
+        },
+        "x86_64-linux": {
+          "store_path": "/nix/store/hfmijz9sc6zh94zn54zmb2434b6df524-inotify-tools-4.23.9.0"
+        }
+      }
+    }
+  }
+}

@@ -7,7 +7,7 @@ defmodule PhelmWeb.PageLive do
   def render(assigns) do
     ~H"""
     <div class="p-10">
-      <.live_component module={PhelmWeb.Counter} id="counter01" />
+      <.live_component id="counter-elixir" module={PhelmWeb.CounterElixir} />
     </div>
     """
   end

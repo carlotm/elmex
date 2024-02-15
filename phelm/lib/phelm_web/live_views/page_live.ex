@@ -2,8 +2,6 @@ defmodule PhelmWeb.PageLive do
 
   use Phoenix.LiveView
 
-  import PhelmWeb.CoreComponents
-
   def render(assigns) do
     ~H"""
     <div class="p-4 space-y-4">

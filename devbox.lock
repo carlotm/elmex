@@ -21,6 +21,26 @@
         }
       }
     },
+    "elixir_ls@latest": {
+      "last_modified": "2023-03-16T17:26:55Z",
+      "resolved": "github:NixOS/nixpkgs/194c2aa446b2b059886bb68be15ef6736d5a8c31#elixir_ls",
+      "source": "devbox-search",
+      "version": "0.13.0",
+      "systems": {
+        "aarch64-darwin": {
+          "store_path": "/nix/store/km5c2g3v333dn8qfdyk4gxkhzgny0v1n-elixir-ls-0.13.0"
+        },
+        "aarch64-linux": {
+          "store_path": "/nix/store/2s0n6vvshi17la38dmj4qxvqqhp54xwp-elixir-ls-0.13.0"
+        },
+        "x86_64-darwin": {
+          "store_path": "/nix/store/4kzl3wqfdgfiyjwyd4sy64r63i070psy-elixir-ls-0.13.0"
+        },
+        "x86_64-linux": {
+          "store_path": "/nix/store/dmj6zvs029z9v9f5ay5wwz0agkcnqdrb-elixir-ls-0.13.0"
+        }
+      }
+    },
     "glibcLocales@latest": {
       "last_modified": "2024-01-27T14:55:31Z",
       "resolved": "github:NixOS/nixpkgs/160b762eda6d139ac10ae081f8f78d640dd523eb#glibcLocales",

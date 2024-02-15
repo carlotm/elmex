@@ -2,7 +2,8 @@
   "packages": [
     "glibcLocales@latest",
     "elixir@latest",
-    "inotify-tools@latest"
+    "inotify-tools@latest",
+    "elixir_ls@latest"
   ],
   "shell": {
     "init_hook": [

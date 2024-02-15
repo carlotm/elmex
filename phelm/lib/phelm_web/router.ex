@@ -18,6 +18,7 @@ defmodule PhelmWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    live "/live", PageLive
   end
 
   # Other scopes may use custom stacks.

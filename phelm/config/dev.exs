@@ -19,6 +19,10 @@ config :phelm, PhelmWeb.Endpoint,
     tailwind: {Tailwind, :install_and_run, [:phelm, ~w(--watch)]}
   ]
 
+config :phelm, Phelm.ElmWatcher,
+  source: ["assets/elm"],
+  output: ["priv/static/assets"]
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed

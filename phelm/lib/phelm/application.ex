@@ -16,7 +16,8 @@ defmodule Phelm.Application do
       # Start a worker by calling: Phelm.Worker.start_link(arg)
       # {Phelm.Worker, arg},
       # Start to serve requests, typically the last entry
-      PhelmWeb.Endpoint
+      PhelmWeb.Endpoint,
+      {Phelm.ElmWatcher, Application.get_env(:phelm, Phelm.ElmWatcher, [])}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
@@ -31,5 +32,15 @@ defmodule Phelm.Application do
   def config_change(changed, _new, removed) do
     PhelmWeb.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  defp maybe_watch_elm do
+    to_watch = Application.get_env(:phelm, :elm_watch, [])
+
+    case to_watch do
+      [] -> []
+      files when is_list(files) -> [{Phelm.ElmWatcher, files}]
+      _ -> []
+    end
   end
 end

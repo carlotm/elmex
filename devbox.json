@@ -17,11 +17,6 @@
       "export ERL_AFLAGS='-kernel shell_history enabled'",
       "mix local.hex --force",
       "mix local.rebar --force"
-    ],
-    "scripts": {
-      "test": [
-        "echo \"Error: no test specified\" && exit 1"
-      ]
-    }
+    ]
   }
 }

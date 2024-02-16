@@ -22,21 +22,38 @@ defmodule Elmex do
 
   def init(_) do
     user_conf = Application.get_all_env(:elmex)
-    conf = Keyword.merge(default_conf(), user_conf)
 
-    source_files =
-      Keyword.get(conf, :base_dir)
-      |> Path.join(Keyword.get(conf, :sources))
-      |> Path.wildcard()
+    conf =
+      default_conf()
+      |> Keyword.merge(user_conf)
+      |> Enum.into(%{})
 
-    {:ok, %{conf: conf, source_files: source_files}}
+    state =
+      Map.put(
+        conf,
+        :source_files,
+        conf.base_dir
+        |> Path.join(conf.sources)
+        |> Path.wildcard()
+      )
+
+    {:ok, state}
   end
 
-  def handle_call(:compile, _, %{conf: conf, source_files: source_files} = state) do
+  def handle_call(
+        :compile,
+        _,
+        %{
+          base_dir: base_dir,
+          compiler_options: compiler_options,
+          output: output,
+          source_files: source_files
+        } = state
+      ) do
     response =
       source_files
       |> Enum.map(fn f ->
-        {out, _} = compile_file(f, conf)
+        {out, _} = compile_file(f, base_dir, compiler_options, output)
         out
       end)
       |> Enum.join("\n")
@@ -58,12 +75,10 @@ defmodule Elmex do
     ]
   end
 
-  defp compile_file(path, conf) do
-    compiler_options = Keyword.get(conf, :compiler_options)
-    base_dir = Keyword.get(conf, :base_dir)
+  defp compile_file(path, base_dir, compiler_options, output) do
     input_file = Path.relative_to(path, base_dir)
     output_filename = Path.basename(path, ".elm") <> ".js"
-    output_file = Path.join(Keyword.get(conf, :output), output_filename)
+    output_file = Path.join(output, output_filename)
 
     System.cmd("elm", ["make", compiler_options, input_file, "--output", output_file],
       cd: base_dir

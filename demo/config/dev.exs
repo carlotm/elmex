@@ -19,6 +19,11 @@ config :demo, DemoWeb.Endpoint,
     tailwind: {Tailwind, :install_and_run, [:demo, ~w(--watch)]}
   ]
 
+config :elmex,
+  source: "src/*.elm",
+  output: "../../priv/static/assets",
+  watch: true
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed

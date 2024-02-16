@@ -1,4 +1,5 @@
-module Main exposing (Model, Msg(..), init, main, update, view)
+module Counter exposing (main)
+
 
 import Browser
 import Html exposing (Html, button, div, text)

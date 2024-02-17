@@ -53,10 +53,10 @@ defmodule Elmex do
     response =
       source_files
       |> Enum.map(fn f ->
-        {out, _} = compile_file(f, base_dir, compiler_options, output)
-        out
+        {out, exit_code} = compile_file(f, base_dir, compiler_options, output)
+        IO.puts(out)
+        exit_code
       end)
-      |> Enum.join("\n")
 
     {:reply, response, state}
   end

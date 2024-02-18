@@ -49,7 +49,7 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ input [ placeholder "Text to reverse", value model.content, onInput Change ] []
+    div [ ]
+        [ input [ class "border border-slate-400 p-1 p-4 rounded-full", placeholder "...", value model.content, onInput Change ] []
         , div [] [ text (String.reverse model.content) ]
         ]

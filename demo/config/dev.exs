@@ -16,13 +16,13 @@ config :demo, DemoWeb.Endpoint,
   secret_key_base: "TSGOZFQuMSGOdq4VdCrkKpKg4SJXbTCk5s8SpYQBnxwsOI28bR0m0Gat7gkOOFWz",
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:demo, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:demo, ~w(--watch)]}
+    tailwind: {Tailwind, :install_and_run, [:demo, ~w(--watch)]},
+    elmex: {Elmex, :start, [:watch]}
   ]
 
 config :elmex,
   source: "src/*.elm",
-  output: "../../priv/static/assets",
-  watch: true
+  output: "../../priv/static/assets"
 
 # ## SSL Support
 #

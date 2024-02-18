@@ -33,7 +33,7 @@ init =
 
 type Msg
     = Increment
-    -- | Decrement
+    | Decrement
 
 
 update : Msg -> Model -> Model

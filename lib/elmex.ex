@@ -94,7 +94,7 @@ defmodule Elmex do
     rc
   end
 
-  defp build_state(extra \\ %{}) do
+  defp build_state(extra) do
     user_conf = Application.get_all_env(:elmex)
 
     @default_conf

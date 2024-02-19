@@ -21,8 +21,12 @@ config :demo, DemoWeb.Endpoint,
   ]
 
 config :elmex,
-  source: "src/*.elm",
-  output: "../../priv/static/assets"
+  base_dir: "assets/elm",
+  output_dir: "../../priv/static/assets",
+  apps: [
+    elm_total: "src/*.elm",
+    just_counter: "src/Count*.elm"
+  ]
 
 # ## SSL Support
 #

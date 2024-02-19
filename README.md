@@ -24,6 +24,7 @@ module.exports = {
 # TODO
 
 - Write instructions to configure elmex
+- Write instructions to add the watcher
 - Write instructions to install the hook (in vendor for now)
 - Write instructions to add the elm built files
 - Find a way to build only one asset

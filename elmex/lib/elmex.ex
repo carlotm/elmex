@@ -3,10 +3,10 @@ defmodule Elmex do
   @name __MODULE__
   @default_conf [
     base_dir: "assets/elm",
-    sources: "./src/*.elm",
-    output: "../../priv/static/assets",
+    output_dir: "../../priv/static/assets",
     compiler_options: "--debug",
-    watching: false
+    watching: false,
+    apps: [elmex: "src/*.elm"]
   ]
 
   use GenServer
@@ -32,31 +32,28 @@ defmodule Elmex do
   #########################################################
 
   def init(:watch) do
-    conf = fetch_conf(%{watching: true})
-    {:ok, watcher_pid} = FileSystem.start_link(dirs: [conf.base_dir])
+    state = build_state(%{watching: true})
+    {:ok, watcher_pid} = FileSystem.start_link(dirs: [state.base_dir])
     FileSystem.subscribe(watcher_pid)
-    {:ok, Map.put(conf, :watcher_pid, watcher_pid)}
+    {:ok, Map.put(state, :watcher_pid, watcher_pid)}
   end
 
   def init(_) do
-    {:ok, fetch_conf()}
+    {:ok, build_state()}
   end
 
   def handle_call(:compile, _, state) do
-    response =
-      fetch_source_files(state.base_dir, state.sources)
-      |> Enum.map(&compile_file(&1, state))
-
+    response = Enum.map(state.apps, &compile_app(&1, state))
     {:reply, response, state}
   end
 
   def handle_info(
-        {:file_event, watcher_pid, {path, [:modified, :closed]}},
+        {:file_event, watcher_pid, {_path, [:modified, :closed]}},
         %{watcher_pid: watcher_pid} = state
       ) do
-    if Path.extname(path) == ".elm" do
-      compile_file(path, state)
-    end
+    # if Path.extname(path) == ".elm" do
+    #   compile_file(path, state)
+    # end
 
     {:noreply, state}
   end
@@ -73,13 +70,17 @@ defmodule Elmex do
   # Helpers
   #########################################################
 
-  defp compile_file(path, state) do
-    input_file = Path.relative_to(path, state.base_dir)
-    output_filename = Path.basename(path, ".elm") <> ".js"
-    output_file = Path.join(state.output, output_filename)
+  defp compile_app({app_name, glob}, state) do
+    sources = fetch_source_files(state.base_dir, glob)
+    bundle_app(app_name, sources, state)
+  end
+
+  defp bundle_app(app_name, sources, state) do
+    output_filename = Atom.to_string(app_name) <> ".js"
+    output_path = Path.join(state.output_dir, output_filename)
 
     {out, rc} =
-      System.cmd("elm", ["make", state.compiler_options, input_file, "--output", output_file],
+      System.cmd("elm", ["make", state.compiler_options, "--output", output_path] ++ sources,
         cd: state.base_dir,
         stderr_to_stdout: state.watching
       )
@@ -88,7 +89,7 @@ defmodule Elmex do
     rc
   end
 
-  defp fetch_conf(extra \\ %{}) do
+  defp build_state(extra \\ %{}) do
     user_conf = Application.get_all_env(:elmex)
 
     @default_conf
@@ -101,5 +102,6 @@ defmodule Elmex do
     base_dir
     |> Path.join(sources_glob)
     |> Path.wildcard()
+    |> Enum.map(&Path.relative_to(&1, base_dir))
   end
 end

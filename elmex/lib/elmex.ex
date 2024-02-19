@@ -48,12 +48,12 @@ defmodule Elmex do
   end
 
   def handle_info(
-        {:file_event, watcher_pid, {_path, [:modified, :closed]}},
+        {:file_event, watcher_pid, {path, [:modified, :closed]}},
         %{watcher_pid: watcher_pid} = state
       ) do
-    # if Path.extname(path) == ".elm" do
-    #   compile_file(path, state)
-    # end
+    if Path.extname(path) == ".elm" do
+      compile_apps(path, state)
+    end
 
     {:noreply, state}
   end
@@ -69,6 +69,12 @@ defmodule Elmex do
   #########################################################
   # Helpers
   #########################################################
+
+  defp compile_apps(path, state) do
+    Enum.each(state.apps, fn({app_name, glob}) ->
+      compile_app({app_name, glob}, state)
+    end)
+  end
 
   defp compile_app({app_name, glob}, state) do
     sources = fetch_source_files(state.base_dir, glob)

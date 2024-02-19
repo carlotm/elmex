@@ -21,26 +21,13 @@ import "phoenix_html"
 import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
-
-const hooks = {};
-hooks.Elmex = {
-    mounted()
-    {
-        const elmAppName = this.el.dataset.elmApp;
-        if(!elmAppName)
-        {
-            console.warn(`Please check if data-elm-app is correct for DOM element #${this.el.id}`);
-            return;
-        }
-        Elm[elmAppName].init({ node: this.el });
-    }
-};
+import Elmex from "../vendor/elmex_hook"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
   params: {_csrf_token: csrfToken},
-  hooks
+  hooks: {Elmex}
 })
 
 // Show progress bar on live navigation and form submits

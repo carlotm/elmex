@@ -6,6 +6,8 @@ defmodule Mix.Tasks.Elmex.Vendorize do
   require Logger
 
   def run(_) do
-    Logger.notice("TODO")
+    :code.priv_dir(:elmex)
+    |> Path.join("elmex_hook.js")
+    |> File.copy("assets/vendor/elmex_hook.js")
   end
 end

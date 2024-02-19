@@ -5,7 +5,6 @@ defmodule Elmex do
     base_dir: "assets/elm",
     output_dir: "../../priv/static/assets",
     compiler_options: "--debug",
-    watching: false,
     apps: [elmex: "src/*.elm"]
   ]
 
@@ -39,7 +38,7 @@ defmodule Elmex do
   end
 
   def init(_) do
-    {:ok, build_state()}
+    {:ok, build_state(%{watching: false})}
   end
 
   def handle_call(:compile, _, state) do
@@ -52,7 +51,7 @@ defmodule Elmex do
         %{watcher_pid: watcher_pid} = state
       ) do
     if Path.extname(path) == ".elm" do
-      compile_apps(path, state)
+      compile_apps(state)
     end
 
     {:noreply, state}
@@ -70,7 +69,7 @@ defmodule Elmex do
   # Helpers
   #########################################################
 
-  defp compile_apps(path, state) do
+  defp compile_apps(state) do
     Enum.each(state.apps, fn({app_name, glob}) ->
       compile_app({app_name, glob}, state)
     end)

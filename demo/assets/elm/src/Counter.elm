@@ -25,7 +25,7 @@ type alias Model =
 
 init : Model
 init =
-    42
+    0
 
 
 

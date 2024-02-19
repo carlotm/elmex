@@ -89,3 +89,6 @@ module.exports = {
   ...
 ```
 
+## Quirks
+
+- Flags are always strings

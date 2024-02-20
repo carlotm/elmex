@@ -2,14 +2,20 @@ export default {
     mounted() {
         const elmAppName = this.el.dataset.elmApp;
 
-        if(!elmAppName)
-        {
-            console.warn(`Please check if data-elm-app is correct for DOM element #${this.el.id}`);
-            return;
-        }
+        if(!elmAppName) return;
 
         const flags = this.el.dataset.flags;
 
-        Elm[elmAppName].init({ node: this.el, flags: flags || null});
-    },
+        const app = flags === undefined
+            ? Elm[elmAppName].init({ node: this.el })
+            : Elm[elmAppName].init({ node: this.el, flags})
+            ;
+
+        const ports = this.el.dataset.ports;
+
+        if(ports)
+            app.ports.pushEvent.subscribe((payload) => {
+                this.pushEvent("elmex", payload);
+            });
+    }
 };

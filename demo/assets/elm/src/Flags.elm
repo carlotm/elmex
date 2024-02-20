@@ -1,7 +1,11 @@
 module Flags exposing (..)
 
 import Browser
-import Html exposing (Html, text)
+import Html exposing (Html, button, div, text)
+import Html.Attributes exposing (class)
+import Html.Events exposing (onClick)
+import Libs.LiveView exposing (pushEvent)
+
 
 
 
@@ -29,9 +33,13 @@ type alias Model =
 init : String -> ( Model, Cmd Msg )
 init currentTime =
     let
-        t = case String.toInt currentTime of
-            Just x -> x
-            Nothing -> 0
+        t =
+            case String.toInt currentTime of
+                Just x ->
+                    x
+
+                Nothing ->
+                    0
     in
     ( { currentTime = t }
     , Cmd.none
@@ -44,11 +52,17 @@ init currentTime =
 
 type Msg
     = NoOp
+    | TalkToLV
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update _ model =
-    ( model, Cmd.none )
+update msg model =
+    case msg of
+        NoOp ->
+            ( model, Cmd.none )
+
+        TalkToLV ->
+            ( model, pushEvent "hey" )
 
 
 
@@ -57,7 +71,10 @@ update _ model =
 
 view : Model -> Html Msg
 view model =
-    text (String.fromInt model.currentTime)
+    div []
+        [ text ("I am a flag: " ++ String.fromInt model.currentTime)
+        , button [ onClick TalkToLV, class "ml-2 rounded bg-slate-200 p-2" ] [ text "Send event to the live view" ]
+        ]
 
 
 

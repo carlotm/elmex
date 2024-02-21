@@ -12,7 +12,7 @@ defmodule Mix.Tasks.Elmex.Vendorize do
   ]
   @default [
     js_path: "assets/vendor",
-    elm_path: "assets/elm/src/LiveView"
+    elm_path: "assets/elm/src/Elmex"
   ]
 
   def run(args) do
@@ -36,7 +36,7 @@ defmodule Mix.Tasks.Elmex.Vendorize do
     elm_ports_file = Path.join(elm_path, "Utils.elm")
 
     :code.priv_dir(:elmex)
-    |> Path.join("LiveView/Utils.elm")
+    |> Path.join("Elmex/Utils.elm")
     |> File.copy(elm_ports_file)
 
     Logger.info("Wrote: #{elm_ports_file}")

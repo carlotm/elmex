@@ -6,10 +6,7 @@ export default {
 
         const flags = this.el.dataset.flags;
 
-        const app = flags === undefined
-            ? Elm[elmAppName].init({ node: this.el })
-            : Elm[elmAppName].init({ node: this.el, flags})
-            ;
+        const app = Elm[elmAppName].init({ node: this.el, flags});
 
         const ports = this.el.dataset.ports;
 

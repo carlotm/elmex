@@ -19,6 +19,13 @@ defmodule DemoWeb.DemoLive do
       <div phx-hook="Elmex" id="Counter" data-elm-app="Counter" />
       <h2 class="font-bold text-xl">Text reverse</h2>
       <div phx-hook="Elmex" id="TextReverse" data-elm-app="TextReverse" />
+      <button
+        class="p-2 bg-yellow-200 rounded"
+        phx-click="talk-to-elm"
+        value="Elm is cool"
+      >
+        Click me!!!
+      </button>
     </div>
     """
   end
@@ -29,5 +36,9 @@ defmodule DemoWeb.DemoLive do
 
   def handle_event("elmex", value, socket) do
     {:noreply, assign(socket, :from_elm, value)}
+  end
+
+  def handle_event("talk-to-elm", payload, socket) do
+    {:noreply, push_event(socket, "elmex", payload)}
   end
 end

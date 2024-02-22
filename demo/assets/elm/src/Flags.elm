@@ -1,10 +1,10 @@
 module Flags exposing (..)
 
 import Browser
-import Html exposing (Html, button, div, text)
+import Html exposing (Html, button, div, text, p)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
-import Elmex exposing (pushEvent)
+import Elmex exposing (pushEvent, pullEvent)
 
 
 
@@ -27,7 +27,9 @@ main =
 
 
 type alias Model =
-    { currentTime : Int }
+    { currentTime : Int
+    , messageFromLV : String
+    }
 
 
 init : String -> ( Model, Cmd Msg )
@@ -41,7 +43,7 @@ init currentTime =
                 Nothing ->
                     0
     in
-    ( { currentTime = t }
+    ( { currentTime = t, messageFromLV = "...waiting for live view..." }
     , Cmd.none
     )
 
@@ -53,6 +55,8 @@ init currentTime =
 type Msg
     = NoOp
     | TalkToLV
+    | Recv String
+
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -64,6 +68,9 @@ update msg model =
         TalkToLV ->
             ( model, pushEvent "hey" )
 
+        Recv message ->
+            ( { model | messageFromLV = message }, Cmd.none)
+
 
 
 -- VIEW
@@ -71,9 +78,10 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ text ("I am a flag: " ++ String.fromInt model.currentTime)
-        , button [ onClick TalkToLV, class "ml-2 rounded bg-slate-200 p-2" ] [ text "Send event to the live view" ]
+    div [ class "space-y-2" ]
+        [ p [] [ text ("I am a flag: " ++ String.fromInt model.currentTime) ]
+        , p [] [ text model.messageFromLV ]
+        , button [ onClick TalkToLV, class "rounded bg-slate-200 p-2" ] [ text "Send event to the live view" ]
         ]
 
 
@@ -83,4 +91,4 @@ view model =
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-    Sub.none
+    pullEvent Recv

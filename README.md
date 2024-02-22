@@ -1,5 +1,7 @@
 # Elmex
 
+:warning: :warning: this is a just proof of concept :warning: :warning:
+
 ## Configure Elmex
 
 Add Elmex configuration to your project.
@@ -42,7 +44,7 @@ compiled on save.
 
 ## Add the Elmex hook to the Live Socket
 
-Generate the Elmex phx-hook into `assets/vendor` with:
+Generate the Liveview hook and Elm ports with:
 
 ```
 mix elmex.vendorize
@@ -61,6 +63,10 @@ let liveSocket = new LiveSocket("/live", Socket, {
 })
 ...
 ```
+
+To use the ports, import it into your elm app and do the usual elm ports stuff:
+
+TODO...
 
 ## Add the bundle to your layout
 
@@ -88,7 +94,3 @@ module.exports = {
   ],
   ...
 ```
-
-## Quirks
-
-- Flags are always strings

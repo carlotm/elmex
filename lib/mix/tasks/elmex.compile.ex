@@ -3,8 +3,7 @@ defmodule Mix.Tasks.Elmex.Compile do
 
   use Mix.Task
 
-  require Logger
-
+  @spec run(list()) :: no_return()
   def run(_) do
     Elmex.start()
     Elmex.compile()
